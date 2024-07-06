@@ -11,7 +11,7 @@ MultiPaperを使ってマイクラサーバの負荷を分散する
 - OS: DietPi v9.5.1 - DietPi_RPi-ARMv8-Bookworm.img.xz
 - Debian version: 12.6
 
-## ラズパイ環境構築手順
+## ラズパイ自体の環境構築手順
 
 作業用windows PCから公開鍵SSH接続できるまで。
 
@@ -38,6 +38,30 @@ MultiPaperを使ってマイクラサーバの負荷を分散する
         sudo apt update
         # Gitをアップグレード
         sudo apt upgrade git
+
+        # 初期設定
+        git config --global user.email "example@email.com"
+        git config --global user.name "exmaple"
+
+        # githubからこのリポジトリを落とすために鍵ペア作成
+        cd ~/.ssh
+        ssh-keygen -t rsa
+        # パーミッション
+        chmod 600 id_rsa
+        chmod 600 id_rsa.pub
+
+        # 公開鍵をgithubに渡す
+        cat id_rsa.pub
+        # gihubに登録
+
+        # 疎通ができなかったため設定ファイル追加
+        Host github github.com
+            HostName github.com
+            IdentityFile ~/.ssh/id_rsa # 秘密鍵
+            User git
+
+        # 疎通
+        ssh -T github
         ```
 
     2. vim
@@ -113,3 +137,10 @@ MultiPaperを使ってマイクラサーバの負荷を分散する
     1. 作業用PCのVSCodeに`Remote Development`を追加
     2. リモートエクスプローラーからSSHの歯車マークの設定をする
     3. 接続
+7. mcmp-projectをクローン
+
+    ```bash
+    # clone
+    git clone git@github.com:unSerori/mcmp-project.git .
+
+    ```
