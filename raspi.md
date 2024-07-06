@@ -12,6 +12,8 @@ OSインストールから作業用PCから公開鍵SSH接続できるまで。
 
 ## 環境構築手順
 
+### インストールと諸設定
+
 1. EtcherでDietPiをストレージに書き込み
 2. wi-fi設定など
 3. ユーザーを追加
@@ -21,34 +23,16 @@ OSインストールから作業用PCから公開鍵SSH接続できるまで。
     passwd mcmp-pass
     ```
 
-4. 必要なコマンドインストール
-    1. git
+### SSH接続関連
 
-        ```bash
-        # パッケージリストを更新
-        sudo apt update
-        # software-properties-commonパッケージをインストール
-        sudo apt install software-properties-common
-        # PPAを追加
-        sudo add-apt-repository ppa:git-core/ppa
-        # パッケージリストを更新
-        sudo apt update
-        # Gitをアップグレード
-        sudo apt upgrade git
+1. エディターを追加
 
-        # 初期設定
-        git config --global user.email "example@email.com"
-        git config --global user.name "example"
-        ```
+    ```bash
+    # install
+    sudo apt install -y vim
+    ```
 
-    2. vim
-
-        ```bash
-        # install
-        sudo apt install -y vim
-        ```
-
-5. ホスト名変更
+2. ホスト名変更
     1. /etc/hostname, /etc/hostsのhostnameを変更。今回は`mcmp-srv`にした
 
         ```bash
@@ -79,9 +63,27 @@ OSインストールから作業用PCから公開鍵SSH接続できるまで。
         # これでusername@hostname.localでsshできるはず。
         ```
 
-6. 作業用PC, GitHubとのSSH確立
+3. 作業用PC, GitHubとのSSH確立
+    1. Gitのインスコ
 
-    1. 作業用PCとのSSH接続
+        ```bash
+        # パッケージリストを更新
+        sudo apt update
+        # software-properties-commonパッケージをインストール
+        sudo apt install software-properties-common
+        # PPAを追加
+        sudo add-apt-repository ppa:git-core/ppa
+        # パッケージリストを更新
+        sudo apt update
+        # Gitをアップグレード
+        sudo apt upgrade git
+
+        # 初期設定
+        git config --global user.email "example@email.com"
+        git config --global user.name "example"
+        ```
+
+    2. 作業用PCとのSSH接続
 
         ```bash
         # sshサーバが入ってなかった
@@ -118,7 +120,7 @@ OSインストールから作業用PCから公開鍵SSH接続できるまで。
         chmod 600 /home/mcmp/.ssh/authorized_keys
         ```
 
-    2. GitHubとのSSH接続
+    3. GitHubとのSSH接続
 
         ```bash
         # githubと通信するために鍵ペア作成
@@ -143,7 +145,43 @@ OSインストールから作業用PCから公開鍵SSH接続できるまで。
         ssh -T git@github.com
         ```
 
-7. 作業用pcからSSH接続
+4. 作業用pcからSSH接続
     1. 作業用PCのVS Codeに`Remote Development`を追加
     2. リモートエクスプローラーからSSHの歯車マークの設定をする
     3. 接続
+
+### Dockerインスコ
+
+1. リポジトリのセットアップ
+
+    ```bash
+    # 念のため古いリポジトリを削除 # removeでなくpurgeで設定・関連ファイルまで削除
+    apt purge lxc-docker*
+    apt purge docker.io*
+    sudo apt remove docker docker-engine docker.io containerd runc
+
+    # aptが HTTPS 経由でリポジトリにアクセスしパッケージをインストールできるようにリポジトリをセットアップ
+    apt install \
+        ca-certificates \
+        curl \
+        gnupg \
+        lsb-release
+
+    # GPG鍵を追加
+    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+    # 安定板を追加
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    ```
+
+2. Docker Engineのインスコ
+
+    ```bash
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+    # 確認
+    docker run hello-world
+    ```
