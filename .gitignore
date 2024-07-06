@@ -1,0 +1,15 @@
+# todo
+TODO*
+
+# memo
+memo.md
+
+# .vscode
+.vscode/
+
+# volumes
+share/
+db-data/
+
+# docker-composeで使う.env
+.env
