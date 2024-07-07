@@ -185,3 +185,18 @@ OSインストールから作業用PCから公開鍵SSH接続できるまで。
     # 確認
     docker run hello-world
     ```
+
+3. dockerコマンドに対する権限を付与
+
+    ```bash
+    # sudoなしでの実行権限付与
+    usermod -aG docker mcmp
+
+    # 起動時に自動起動
+    systemctl enable docker.service
+    systemctl enable containerd.service
+
+    # 再起動
+    sudo systemctl restart docker.service
+    sudo systemctl restart containerd.service
+    ```

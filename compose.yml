@@ -1,0 +1,17 @@
+services:  # コンポースするサービスたち
+    mc_server:  # サービスの名前
+        container_name: mp_server  # コンテナ名
+        volumes:  # ボリュームの保持。
+            - ./mcmp-master/mc-server:/root/mc-server
+        build:  # ビルド設定
+            context: ./mcmp-master  # ビルドプロセスが実行されるパス。
+            dockerfile: Dockerfile  # Dockerfileのパス。
+        ports:  # 公開ポート
+            - "25565:25565"  # ホストマシンのポートとコンテナのポートをマッピング
+        restart: always  # コンテナの再起動
+        environment:  # 環境変数
+            EULA: "true"
+            TZ: "Asia/Tokyo"
+        tty: true  # コンテナ内で対話的操作を可能
+        # env_file: 
+        #     - .env
