@@ -22,3 +22,34 @@ MultiPaperを使ってマイクラサーバの負荷を分散する
     # 拡張機能をインポート
     cat vscode-ext.txt | while read line; do code --install-extension $line; done
     ```
+
+4. .envファイルをコピーまたは作成
+
+    ```env:.env
+    MULTIPAPER_MASTER_URL=multipaper-master-x.y.z-all.jarのDLリンク
+    BASE_IMAGE=jkdのベースイメージ。ここではeclipse-temurin:x.y.z_a-jdkを使用。
+    ```
+
+## サーバーアップデート
+
+新しいバージョンがリリースされた場合の更新方法
+
+- .env内のMULTIPAPER_MASTER_URLを更新
+- .env内のBASE_IMAGEを適切なJKDイメージに変更
+
+```bash
+# 再ビルド&再起動
+docker compose build && docker compose up -d
+
+# (詳細なログはbuildコマンドに以下を追加)
+--progress=plain
+```
+
+## マイクラ鯖起動
+
+```bash
+# SSHで入った後以下実行でコンテナーup
+docker compose up -d
+
+# サーバーシャットダウン
+```
