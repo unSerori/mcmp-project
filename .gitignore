@@ -8,7 +8,7 @@ memo.md
 .vscode/
 
 # volumes
-mc-server/
+world/
 
 # docker-composeで使う.env
 .env
