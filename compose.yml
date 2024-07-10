@@ -1,11 +1,15 @@
 services:  # コンポースするサービスたち
     mc_server:  # サービスの名前
         container_name: mp_server  # コンテナ名
-        volumes:  # ボリュームの保持。
-            - ./mcmp-master/mc-server:/root/mc-server
+        # volumes:  # ボリュームの保持。
+        #     - ./mcmp-master/world:/root/mc-server/world # world data
+        #     - ./mcmp-master/setting.yml:/root/mc-server/setting.yml # setting file
         build:  # ビルド設定
             context: ./mcmp-master  # ビルドプロセスが実行されるパス。
             dockerfile: Dockerfile  # Dockerfileのパス。
+            args:  # 引数
+                - MULTIPAPER_MASTER_URL=${MULTIPAPER_MASTER_URL}
+                - BASE_IMAGE=${BASE_IMAGE}
         ports:  # 公開ポート
             - "25565:25565"  # ホストマシンのポートとコンテナのポートをマッピング
         restart: always  # コンテナの再起動
