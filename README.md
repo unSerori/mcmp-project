@@ -9,7 +9,7 @@ worldデータの保持とロードバランサーを行うMasterと実際のサ
 ## 環境構築
 
 1. Linux上の環境を整える。[ラズパイでの環境構築](./raspi.md)
-2. mcmp-projectをクローン
+2. mcmp-project-masterをクローン
 
     ```bash
     # clone
