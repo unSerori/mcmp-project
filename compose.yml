@@ -1,6 +1,6 @@
 services:  # コンポースするサービスたち
-    mc_server:  # サービスの名前
-        container_name: mp_server  # コンテナ名
+    mcmp_master_server:  # サービスの名前
+        container_name: mp_master  # コンテナ名
         # volumes:  # ボリュームの保持。
         #     - ./mcmp-master/world:/root/mc-server/world # world data
         #     - ./mcmp-master/setting.yml:/root/mc-server/setting.yml # setting file
