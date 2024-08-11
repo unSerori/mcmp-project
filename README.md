@@ -4,6 +4,7 @@
 
 MultiPaperを使って負荷分散マイクラサーバを立てる。  
 worldデータの保持とロードバランサーを行うMasterと実際のサーバ処理を行うslaveがある。これはMaster環境構築リポジトリ。  
+
 今回は[ラズパイ](./raspi.md)にmasterと常時起動用の[slave](https://github.com/unSerori/mcmp-project-slave)をインストールし、自分が参加する際などwin10PCを起動している間は[slave](https://github.com/unSerori/mcmp-project-slave)として負荷分散に参加し負荷を受け持つ。  
 
 ## 環境構築

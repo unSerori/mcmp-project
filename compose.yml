@@ -11,7 +11,7 @@ services:  # コンポースするサービスたち
                 - MULTIPAPER_MASTER_URL=${MULTIPAPER_MASTER_URL}
                 - BASE_IMAGE=${BASE_IMAGE}
         ports:  # 公開ポート
-            - "25565:25565"  # ホストマシンのポートとコンテナのポートをマッピング
+            - "25256:25565"  # ホストマシンのポートとコンテナのポートをマッピング
         restart: always  # コンテナの再起動
         environment:  # 環境変数
             EULA: "true"
